@@ -1,8 +1,9 @@
 // Wow, what? I need this line just to call from_str ? Ugh.
 use core::from_str::FromStr::from_str;
-// Some examples show that you can use "args: ~[~str]"
-//   but I got nothing but errors with that syntax.
-fn main(args:~[~str]){
+
+pub fn main() {
+  // in 0.6 you don't supply main() with args
+  let args = os::args();
   // Having to define vars as muteable will get old quick.
   let mut i    = 0;
   let mut max  = 10;
@@ -11,13 +12,13 @@ fn main(args:~[~str]){
   let mut curr = 1;
   // Cannot check against just "1" because type of .len() is unsigned
   if( args.len() > 1u){
-
-    max = int::from_str(args[1]).get();
+    // to get an int from a string:
+    max = from_str::<int>(args[1]).get();
   }
 
   while(i < max){
    // println cannot directly print an int, so must cast to str
-   println(int::str(sum));
+   println(int::to_str(sum));
    sum  = last + curr;
    last = curr;
    curr = sum;
