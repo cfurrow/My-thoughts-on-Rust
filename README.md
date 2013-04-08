@@ -11,7 +11,7 @@ After writing fib.rs, I had had enough for now. It was a bad experience for me. 
 
 I had to dive into the source of Rust, which is meta-written in Rust, to determine what methods were available to me for int, str, etc. That's where I found that to get an int from a str, you need to do this:
 
-      some_int = option::get(int::from_str(some_str));
+      some_int = from_str::<int>(some_str).get();
       
 Verbose!
 
