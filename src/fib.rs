@@ -1,5 +1,5 @@
-import io::println;
-
+// Wow, what? I need this line just to call from_str ? Ugh.
+use core::from_str::FromStr::from_str;
 // Some examples show that you can use "args: ~[~str]"
 //   but I got nothing but errors with that syntax.
 fn main(args:~[~str]){
