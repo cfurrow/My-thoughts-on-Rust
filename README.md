@@ -9,18 +9,16 @@ After writing fib.rs, I had had enough for now. It was a bad experience for me. 
 - how to structure a main()
 - how to convert a string to an int
 
-I had to dive into the source of Rust, which is meta-written in Rust, to determine what methods were available to me for int, str, etc. That's where I found that to get an int from a str, you need to do this:
+After having a bad time with poorly written documentation, I found that to get an int from a str, you need to do this:
 
-      some_int = from_str::<int>(some_str).get();
-      
-Verbose!
+      some_int.to_str();
 
 Additionally, all local variables are immutable by default, and in order to make them mutable, you have to add three more letters to your declaration:
 
     let some_immutable_int: int = 10;
     let mut some_mutable_int: int = 42;
 
-That got old fast. And this does not work (has to be mutable):
+This is a design decision by the Rust team, to enable easy message passing between tasks, but in contexts where you NEED mutable variables, it sucks. And this does not work (has to be mutable):
 
     let some_immutable_int: int;
     // .. some code
@@ -30,6 +28,16 @@ That got old fast. And this does not work (has to be mutable):
     else{
       some_immutable_int = 42;
     }
+    
+However, this works
+
+      let some_immutable_int = if(condition){
+            10
+      else {
+            42
+      };
+      
+So we need to re-think how to do some common tasks.
     
 ## It's not a big deal.
 I wasn't planning on getting deep-into Rust to develop my next app, but I was curious how their language-design decisions affected my own developer inclinations. In the end, I just don't like Rust. Maybe that will change over time as they change the language, or as I find a need for it. But since it's so close to C/C++, I may just run with them and worry about null-pointers myself (that's one of Rust's core-features, no null or while pointers).
