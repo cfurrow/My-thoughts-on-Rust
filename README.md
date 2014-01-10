@@ -11,7 +11,12 @@ After writing fib.rs, I had had enough for now. It was a bad experience for me. 
 
 After having a bad time with poorly written documentation, I found that to get an int from a str, you need to do this:
 
-      some_int.to_str();
+     use std::from_str::from_str;
+
+     let some_int = match from_str::<int>(some_str) {
+         Some(x) => x,
+         None    => fail!("The string doesn't contain an int")
+     }
 
 Additionally, all local variables are immutable by default, and in order to make them mutable, you have to add three more letters to your declaration:
 

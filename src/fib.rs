@@ -1,29 +1,27 @@
-// Wow, what? I need this line just to call from_str ? Ugh.
-use core::from_str::FromStr::from_str;
+// Needed to access from_str()
+use std::from_str::from_str;
+use std::os::args;
 
-pub fn main() {
-  // in 0.6 you don't supply main() with args
-  let args = os::args();
-  // Having to define vars as muteable will get old quick.
-  let mut i    = 0;
-  let mut max  = 10;
-  let mut sum  = 0;
-  let mut last = 0;
-  let mut curr = 1;
-  // Cannot check against just "1" because type of .len() is unsigned
-  if( args.len() > 1u){
-    // to get an int from a string:
-    max = from_str::<int>(args[1]).get();
-  }
-
-  while(i < max){
-   // println cannot directly print an int, so must cast to str
-   println(int::to_str(sum));
-   sum  = last + curr;
-   last = curr;
-   curr = sum;
-
-   // no i++ unary operator
-   i += 1;
+fn main() {
+  // in 0.6 and forward you don't supply main() with args
+  let args = args();
+  
+  if(args.len() > 1){
+    match from_str::<uint>(args[1]){
+      Some(x) => println!("{}",fib(x)), //or println(fib(x).to_str())
+      None    => fail!("Argument supplied is not a positive number")
+    };
+  } else {
+    fail!("You must provide a number as an argument")
   }
 }
+
+fn fib(n: uint) -> uint{
+  match n {
+    1 => 1,
+    2 => 1,
+    _ => fib(n-1) + fib(n-2)
+  }
+}
+
+
