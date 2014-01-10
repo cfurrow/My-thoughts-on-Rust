@@ -8,7 +8,7 @@ fn main() {
   
   if(args.len() > 1){
     match from_str::<uint>(args[1]){
-      Some(x) => println!("{}",fib(x)), //or println(fib(x).to_str())
+      Some(x) => println!("{}",non_rec_fib(x)), //or println(fib(x).to_str())
       None    => fail!("Argument supplied is not a positive number")
     };
   } else {
@@ -16,6 +16,7 @@ fn main() {
   }
 }
 
+// This is a good way to show-off Rust's pattern matching capabilities, but it has very poor performances
 fn fib(n: uint) -> uint{
   match n {
     1 => 1,
@@ -24,4 +25,15 @@ fn fib(n: uint) -> uint{
   }
 }
 
+fn non_rec_fib(n: uint) -> uint{
+  let mut previous = 1;
+  let mut current = 1;
 
+  for i in range(3, n+1) {
+    let temp = current;
+    current += previous;
+    previous = temp; 
+  }
+
+  current
+}
