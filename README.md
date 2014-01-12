@@ -13,6 +13,15 @@ After having a bad time with poorly written documentation, I found that to get a
 
      use std::from_str::from_str;
 
+     // This is verbose, but there is also a lot going on:
+     // -> The type of some_int in constrained to int (could also be written : let some_int: int = match from_str(some_str) {...})
+     //    from_str applies on generic types, which means you dont have to know a function/method per type, but it also means you have
+     //    to provide Rust's compiler with a hint to guess which type you want the result to be.
+     //
+     // -> from_str() returns an Option, which is an enumerated type, which can either be Some(x) (with x the contained value), or None.
+     //    This allows for simple, and enforced error-checking. You can bypass it by calling unwrap() on the Option, which will fail if the
+     //    Option is None. Of course, this is strongly discouraged. Using this pattern forces you to think about what you want to do in case
+     //    of failure. In general, using Options is the Rust way of dealing with function/method calls that may fail.
      let some_int = match from_str::<int>(some_str) {
          Some(x) => x,
          None    => fail!("The string doesn't contain an int")
